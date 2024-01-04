@@ -4,10 +4,17 @@ export default function Blog(){
 
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
+    const [blogs, setBlogs] = useState([]);
     
     //Passing the synthetic event as argument to stop refreshing the page on submit
     function handleSubmit(e){
         e.preventDefault();
+
+        // setBlogs({title, content});
+        // Now using rest oprerator -->
+        setBlogs([{title,content},...blogs]);
+        console.log(blogs);
+        //Link to understand this topic -->https://www.youtube.com/watch?v=DoIGxx7P-ps
     }
 
     return(
@@ -49,8 +56,16 @@ export default function Blog(){
 
         {/* Section where submitted blogs will be displayed */}
         <h2> Blogs </h2>
-        <h3>{title}</h3>
-        <p>{content}</p>
+        {blogs.map((blog,i) => (
+             <div className="blog" key={i}>
+             <h3>{blog.title}</h3>
+             <p>{blog.content}</p>
+         </div>
+        )
+           
+        )}
+        {/* <h3>{title}</h3>
+        <p>{content}</p> */}
         
         </>
         )
