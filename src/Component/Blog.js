@@ -1,4 +1,4 @@
-import {useState, useRef} from "react";
+import {useState, useRef, useEffect} from "react";
 //Blogging App using Hooks
 export default function Blog(){
 
@@ -11,6 +11,11 @@ export default function Blog(){
     //In this we will assign value as object not string
     const [blogs, setBlogs] = useState([]);
     const titleRef = useRef(null);
+
+//Code to focus Input field at the first render of the page 
+    useEffect(() =>{
+        titleRef.current.focus();
+    },[]);
     
     //Passing the synthetic event as argument to stop refreshing the page on submit
     function handleSubmit(e){
