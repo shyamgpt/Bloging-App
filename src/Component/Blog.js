@@ -3,9 +3,10 @@ import {useState} from "react";
 export default function Blog(){
 
     // const [title, setTitle] = useState("");
-    // In this we assign intial value as an object
+    
     // const [content, setContent] = useState("");
 
+    // In this we assign intial value as an object
     const [formData, setFormData] = useState({title:"",content:""})
     //In this we will assign value as object not string
     const [blogs, setBlogs] = useState([]);
@@ -14,17 +15,18 @@ export default function Blog(){
     function handleSubmit(e){
         e.preventDefault();
 
-        // setBlogs({title, content});
-        // Now using rest oprerator -->
-        // setBlogs([{title,content},...blogs]);
-        // setTitle("");
-        // setContent("");
-        // console.log(blogs);
-
+        /**
+         * setBlogs([{title,content},...blogs]);
+        console.log(blogs);
+         */
         setBlogs([{title:formData.title, content:formData.content},...blogs]);
         setFormData({title:"", content:""})
-       
-        //Link to understand this topic -->https://www.youtube.com/watch?v=DoIGxx7P-ps
+      
+    }
+
+    function removeBlog(i){
+        setBlogs(blogs.filter((blog, index) =>i !== index))
+
     }
 
     return(
@@ -61,7 +63,7 @@ export default function Blog(){
                                 />
                 </Row >
 
-                {/* Button to submit the blog */}            
+                           
                 <button className = "btn">ADD</button>
             </form>
                      
@@ -75,6 +77,13 @@ export default function Blog(){
              <div className="blog" key={i}>
              <h3>{blog.title}</h3>
              <p>{blog.content}</p>
+
+             {/* Implementing Delete button */}
+             
+             <div className="blog-btn">
+                <button onClick={() => removeBlog(i)} className="btn remove">Delete</button>
+             </div>
+
          </div>
         )
            
