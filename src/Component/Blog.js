@@ -2,10 +2,6 @@ import {useState, useRef, useEffect} from "react";
 //Blogging App using Hooks
 export default function Blog(){
 
-    // const [title, setTitle] = useState("");
-    
-    // const [content, setContent] = useState("");
-
     // In this we assign intial value as an object
     const [formData, setFormData] = useState({title:"",content:""})
     //In this we will assign value as object not string
@@ -16,6 +12,17 @@ export default function Blog(){
     useEffect(() =>{
         titleRef.current.focus();
     },[]);
+
+    //Setting the title
+    useEffect(()=>{
+        //(blogs.length) -- this will check wether the blogs is present or not
+        if(blogs.length && blogs[0].title){
+            document.title = blogs[0].title;
+        }
+        else{
+            document.title = "No blogs!!"
+        }
+    },[blogs])
     
     //Passing the synthetic event as argument to stop refreshing the page on submit
     function handleSubmit(e){
@@ -67,6 +74,7 @@ export default function Blog(){
                                 // onChange ={(e) => setContent(e.target.value)}
 
                                 value ={formData.content}
+                                required 
                                 onChange ={(e) => setFormData({title: formData.title, content: e.target.value})}
                                 />
                 </Row >
