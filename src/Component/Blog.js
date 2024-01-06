@@ -9,6 +9,7 @@ export default function Blog(){
     const titleRef = useRef(null);
 
 //Code to focus Input field at the first render of the page 
+//https://www.youtube.com/watch?v=Lt4vy8hfc-s
     useEffect(() =>{
         titleRef.current.focus();
     },[]);
