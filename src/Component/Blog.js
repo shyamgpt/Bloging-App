@@ -5,7 +5,7 @@ import { useState, useRef, useEffect } from "react";
 import {db} from "../firebase-init";
 
 //Import all the required functions from fireStore
-import { collection, addDoc} from "firebase/firestore"; 
+import { collection, addDoc, getDocs} from "firebase/firestore"; 
 
 export default function Blog(){
 
@@ -17,6 +17,27 @@ export default function Blog(){
     useEffect(() => {
         titleRef.current.focus()
     },[]);
+
+    useEffect(() => {
+        async function fetchData(){
+
+            const snapShot = await getDocs(collection(db, "blogs"));
+            console.log(snapShot);
+
+            const blogs = snapShot.docs.map((doc) => {
+                return{
+                    id: doc.id,
+                    ...doc.data()
+                }
+            })
+
+            console.log(blogs);
+            setBlogs(blogs);
+
+        }
+
+        fetchData();
+    })
 
     async function handleSubmit(e){
         e.preventDefault();
@@ -40,6 +61,8 @@ export default function Blog(){
         const docRef = collection(db, "blogs");
             
         await addDoc(docRef, {
+            // await setDoc(docRef, {, it is important, where u are generating the ID by yourself or 
+            //adding a new ID, study more on setDocs -->
                 title: formData.title,
                 content: formData.content,
                 createdOn: new Date()
